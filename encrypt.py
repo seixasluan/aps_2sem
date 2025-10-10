@@ -8,11 +8,22 @@ def encrypt(message, key):
                 encrypted += chr((ord(char) - ord('a') + key) % 26 + ord('a'))
         else:
             encrypted += char
-    
-    print(f"encrypted message: {encrypted}")
-    return encrypted
 
-def decrypt(encryptedMsg, key):
+    
+    file_name = input('Enter the file name to record your encrypted message: ')
+    file_name = file_name + ".txt"
+    file_content = encrypted
+
+    with open(file_name, 'w') as file:
+        file.write(file_content)
+    
+    print(f"File '{file_name}' created and written to.")
+
+def decrypt(file_name, key):
+    file_name = file_name + ".txt"
+    with open(file_name, "r") as file:
+        encryptedMsg = file.read()
+    
     decrypted = ""
     for char in encryptedMsg:
         if char.isalpha():
@@ -24,7 +35,6 @@ def decrypt(encryptedMsg, key):
             decrypted += char
         
     print(f"decrypted message: {decrypted}")
-    return decrypted
 
 def main():
     while True:
@@ -35,12 +45,12 @@ def main():
             encrypt(message, key)
             break
         elif option == "2":
-            message = input("Enter a message to decrypt: ")
+            file_name = input("Enter the file name to decrypt: ")
             key = int(input("Enter a key to decrypt (only number): "))
-            decrypt(message, key)
+            decrypt(file_name, key)
             break
         else:
             print("Your answer is not valid, please answer it again!")
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     main()
